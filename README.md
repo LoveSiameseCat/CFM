@@ -1,4 +1,10 @@
 # CFM
+
+https://arxiv.org/abs/2304.12489
+
+------
+This repository contains the official PyTorch implementation for CFM.
+
 ## Citation
 If you find our work helpful in your research, please cite it as:
 
