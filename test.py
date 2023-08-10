@@ -188,7 +188,7 @@ class SCL(nn.Module):
         return logits
 
 if __name__ == '__main__':
-    checkpoint = torch.load('/data2/law/tcl/exp/base_1/models_params_28.tar',map_location='cpu')
+    checkpoint = torch.load('models_params_28.tar',map_location='cpu')
     model = SCL()
     model.load_state_dict(checkpoint['model_state_dict'])
     print('Loaded successfully! Start customizing your evaluation code!')
