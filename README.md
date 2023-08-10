@@ -10,8 +10,7 @@ This repository contains the official PyTorch implementation for CFM.
 - pytorch == 1.8.0
 
 ## Pre-trained model preperation
-The code of CFM
-pretrained models can be access here https://drive.google.com/file/d/1iP8k4ffJ-3WcuEg5uyrsY3qOY0ALi83H/view?usp=sharing
+The pretrained models can be access here https://drive.google.com/file/d/1iP8k4ffJ-3WcuEg5uyrsY3qOY0ALi83H/view?usp=sharing
 ## Citation
 If you find our work helpful in your research, please cite it as:
 
