@@ -21,5 +21,4 @@ If you find our work helpful in your research, please cite it as:
   journal={arXiv preprint arXiv:2304.12489},
   year={2023}
 }
-}
 ```
