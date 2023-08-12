@@ -66,26 +66,22 @@ class EfficientNet(nn.Module):
         return feature,logits
 
 class SCL(nn.Module):
-    """
-    Build a MoCo model with: a query encoder, a key encoder, and a queue
-    https://arxiv.org/abs/1911.05722
-    """
-    def __init__(self, dim=128, m=0.999, T=0.2,margin=0.5):
+    def __init__(self, dim=128, m=0.999):
         """
         dim: feature dimension (default: 128)
-        K: queue size; number of negative keys (default: 65536)
-        m: moco momentum of updating key encoder (default: 0.999)
-        T: softmax temperature (default: 0.07)
+        m: momentum of updating key encoder (default: 0.999)
         """
         super(SCL, self).__init__()
         self.m = m
-        self.T = T
         self.dim = dim
         self.criterion = nn.CrossEntropyLoss().cuda()
         self.alpha = 0.99
         self.pool = nn.AdaptiveAvgPool2d((1,1))
-        self.margin = margin
+        # unused_parameter
+        self.T = 0.2
+        self.margin = 0.5
         self.iter_num = 0
+        
         # margin_parameter
         self.beta = 0.25
         self.pair_m = 1.5
@@ -151,36 +147,6 @@ class SCL(nn.Module):
             param_p.data = param_p.data * self.m + param_q.data * (1. - self.m)
         for param_q, param_p in zip(self.local_projection_q.parameters(), self.local_projection_p.parameters()):
             param_p.data = param_p.data * self.m + param_q.data * (1. - self.m)
-
-
-    @torch.no_grad()
-    def _momentum_update_key_encoder_bn(self,num):
-        if num >0:
-            for module_q, module_p in zip(self.encoder_q.modules(), self.encoder_p.modules()):
-                if isinstance(module_q,nn.BatchNorm2d) or isinstance(module_q,nn.BatchNorm1d):
-                    module_p.running_mean.data = module_p.running_mean.data*self.m + module_q.running_mean.data * (1. - self.m)
-                    module_p.running_var.data = module_p.running_var.data*self.m + module_q.running_var.data * (1. - self.m)
-            for module_q, module_p in zip(self.projection_q.modules(), self.projection_p.modules()):
-                if isinstance(module_q,nn.BatchNorm2d) or isinstance(module_q,nn.BatchNorm1d):
-                    module_p.running_mean.data = module_p.running_mean.data*self.m + module_q.running_mean.data * (1. - self.m)
-                    module_p.running_var.data = module_p.running_var.data*self.m + module_q.running_var.data * (1. - self.m)
-            for module_q, module_p in zip(self.local_projection_q.modules(), self.local_projection_p.modules()):
-                if isinstance(module_q,nn.BatchNorm2d) or isinstance(module_q,nn.BatchNorm1d):
-                    module_p.running_mean.data = module_p.running_mean.data*self.m + module_q.running_mean.data * (1. - self.m)
-                    module_p.running_var.data = module_p.running_var.data*self.m + module_q.running_var.data * (1. - self.m)
-        else:
-            for module_q, module_p in zip(self.encoder_q.modules(), self.encoder_p.modules()):
-                if isinstance(module_q,nn.BatchNorm2d) or isinstance(module_q,nn.BatchNorm1d):
-                    module_p.running_mean.data = module_q.running_mean.data
-                    module_p.running_var.data = module_q.running_var.data
-            for module_q, module_p in zip(self.projection_q.modules(), self.projection_p.modules()):
-                if isinstance(module_q,nn.BatchNorm2d) or isinstance(module_q,nn.BatchNorm1d):
-                    module_p.running_mean.data = module_q.running_mean.data
-                    module_p.running_var.data = module_q.running_var.data
-            for module_q, module_p in zip(self.local_projection_q.modules(), self.local_projection_p.modules()):
-                if isinstance(module_q,nn.BatchNorm2d) or isinstance(module_q,nn.BatchNorm1d):
-                    module_p.running_mean.data = module_q.running_mean.data
-                    module_p.running_var.data = module_q.running_var.data
 
     def forward(self, im_q):
 
