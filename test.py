@@ -164,8 +164,8 @@ if __name__ == '__main__':
     
     import albumentations as alb
     from albumentations.pytorch.transforms import ToTensorV2
-    transform = abl.Compose([
-    abl.Resize(320,320),
+    transform = alb.Compose([
+    alb.Resize(320,320),
     alb.Normalize(mean=[0.5,0.5,0.5], std=[0.5,0.5,0.5])  
     ToTensorV2()
     ])
