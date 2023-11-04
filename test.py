@@ -159,3 +159,15 @@ if __name__ == '__main__':
     model.load_state_dict(checkpoint['model_state_dict'])
     print('Loaded successfully! Start customizing your evaluation code!')
 
+    '''
+    Here I add the detail of data process 2023/11/04
+    
+    import albumentations as alb
+    from albumentations.pytorch.transforms import ToTensorV2
+    transform = abl.Compose([
+    abl.Resize(320,320),
+    alb.Normalize(mean=[0.5,0.5,0.5], std=[0.5,0.5,0.5])  
+    ToTensorV2()
+    ])
+    '''
+
