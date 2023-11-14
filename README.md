@@ -1,6 +1,6 @@
 # CFM
 
-https://arxiv.org/abs/2304.12489
+https://ieeexplore.ieee.org/document/10315169
 
 ------
 This repository contains the official PyTorch implementation for CFM. Note that we currently only released the model and pre-trained model since it is easy to evaluate on your customized dataset. Please forgive the irregular variable naming in the code, it is too busy for me to re-organize the source code T.T.
@@ -12,6 +12,9 @@ This repository contains the official PyTorch implementation for CFM. Note that 
 ## Pre-trained model preperation
 The pretrained models can be access here https://drive.google.com/file/d/1iP8k4ffJ-3WcuEg5uyrsY3qOY0ALi83H/view?usp=sharing
 ## Citation
+A. Luo, C. Kong, J. Huang, Y. Hu, X. Kang and A. C. Kot, "Beyond the Prior Forgery Knowledge: Mining Critical Clues for General Face Forgery Detection," in IEEE Transactions on Information Forensics and Security, doi: 10.1109/TIFS.2023.3332218.
+
+%%%
 If you find our work helpful in your research, please cite it as:
 
 ```
@@ -22,3 +25,4 @@ If you find our work helpful in your research, please cite it as:
   year={2023}
 }
 ```
+%%%
